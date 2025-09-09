@@ -17,19 +17,15 @@ public class Main {
 			map[i][1] = Integer.parseInt(st.nextToken());
 		}
 		
-		int[][] dp = new int[N+1][K+1];
-		
-		for (int i=1; i<=N; i++) {
-			int curWeight = map[i-1][0];
-			int curValue = map[i-1][1];
-			for (int j=0; j<=K; j++) {
-				if (j < curWeight) dp[i][j] = dp[i-1][j];
-				else dp[i][j] = Math.max(dp[i-1][j], dp[i-1][j-curWeight]+curValue);
-			}
+		int[] dp = new int[K+1];
+		for (int i=0; i<N; i++) {
+		    int w = map[i][0];
+		    int v = map[i][1];
+		    for (int j=K; j>=w; j--) {
+		        dp[j] = Math.max(dp[j], dp[j-w] + v);
+		    }
 		}
-		//for (int i=0; i<N+1; i++) System.out.println(Arrays.toString(dp[i]));
-		
-		System.out.println(dp[N][K]);
+		System.out.println(dp[K]);
 	}
 	
 }
