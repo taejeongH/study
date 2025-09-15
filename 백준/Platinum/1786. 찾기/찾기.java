@@ -6,14 +6,16 @@ import java.util.*;
 public class Main {
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
 		String parent = br.readLine();
 		String pattern = br.readLine();
 		
 		ArrayList<Integer> count = KMP(parent, pattern);
-		System.out.println(count.size());
+		sb.append(count.size()).append("\n");
 		for (int i=0; i<count.size(); i++) {
-			System.out.print(count.get(i) + " ");
+			sb.append(count.get(i)).append(" ");
 		}
+		System.out.println(sb);
 	}
 
 	static int[] makeTable(String pattern) {
@@ -50,7 +52,7 @@ public class Main {
 			
 			if(parent.charAt(i)==pattern.charAt(idx)) {
 				if(idx == n2-1) {
-					count.add(i-n2+2);
+					count.add(i-idx+1);
 					idx=table[idx];
 				} else {
 					idx += 1;
