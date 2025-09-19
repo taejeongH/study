@@ -74,6 +74,8 @@ public class Main {
 					
 					if(map[y][x]!=0 && map[y][x]!=curLand) {
 						minDis = Math.min(dis-1, minDis);
+						while(!que.isEmpty())que.poll();
+						break;
 					}
 					
 					for (int k=0;k<4;k++) {
