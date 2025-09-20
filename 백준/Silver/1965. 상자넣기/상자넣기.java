@@ -5,8 +5,7 @@ import java.util.*;
 
 public class Main {
 	static int N;
-	static int[] map;
-	static int[][] dp;
+	static int[] map, dp;
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		N = Integer.parseInt(br.readLine());
@@ -17,25 +16,21 @@ public class Main {
 			map[i] = Integer.parseInt(st.nextToken());
 			max = Math.max(map[i], max);
 		}
-		dp = new int[max+1][N];
-		for (int i=0; i<max+1; i++) Arrays.fill(dp[i], -1);
-		System.out.println(dfs(0, 0));
+		dp = new int[N];
+		Arrays.fill(dp, -1);
+		int res = 0;
+		for (int i=0; i<N; i++) res = Math.max(dfs(i), res);
+		System.out.println(res);
 	}
 	
-	public static int dfs(int select, int depth) {
-		if (depth==N) return 0;
+	public static int dfs(int idx) {
+		if(dp[idx]!=-1) return dp[idx];
 		
-		if(dp[select][depth]!=-1) return dp[select][depth];
-		
-		int res = 0;
-		for (int i=depth; i<N; i++) {
-			if (select<map[i]) {
-				res = Math.max(res, dfs(map[i], i+1)+1);
-			} else {
-				res = Math.max(res, dfs(select, i+1));
-			}
+		int res = 1;
+		for (int i=idx+1; i<N; i++) {
+			if(map[idx] < map[i]) res = Math.max(res, 1+dfs(i));
 		}
 		
-		return dp[select][depth]=res;
+		return dp[idx]=res;
 	}
 }
